@@ -14,8 +14,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
@@ -25,13 +26,16 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            TradeCommandCenter()
+            TradeSamApp()
         }
     }
 }
 
 @Composable
-fun TradeCommandCenter() {
+fun TradeSamApp() {
+
+    var signal by remember { mutableStateOf("WAIT") }
+    var mode by remember { mutableStateOf("PAPER TRADING") }
 
     MaterialTheme {
 
@@ -43,14 +47,13 @@ fun TradeCommandCenter() {
         ) {
 
             Text(
-                text = "Trade Command Center V4",
-                style = MaterialTheme.typography.headlineSmall
+                text = "TradeSam V1",
+                style = MaterialTheme.typography.headlineMedium
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
-
             Text(
-                text = "₹1,00,000 Capital • Risk First"
+                text = "Dhan Trading Assistant",
+                style = MaterialTheme.typography.bodyMedium
             )
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -68,63 +71,137 @@ fun TradeCommandCenter() {
                         style = MaterialTheme.typography.labelLarge
                     )
 
-                    Spacer(modifier = Modifier.height(10.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
 
                     Text(
-                        text = "WAIT",
+                        text = signal,
                         style = MaterialTheme.typography.headlineLarge
                     )
 
-                    Spacer(modifier = Modifier.height(10.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
 
-                    Text(text = "No confirmed setup")
+                    Text(
+                        text = "Waiting for confirmed setup"
+                    )
                 }
             }
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = "INDICATORS",
+                style = MaterialTheme.typography.titleMedium
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Card(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+
+                Column(
+                    modifier = Modifier.padding(16.dp)
+                ) {
+
+                    Text("EMA 9       —")
+                    Text("EMA 15      —")
+                    Text("VWAP        —")
+                    Text("Breakout    —")
+                    Text("Volume      —")
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = "TRADE PLAN",
+                style = MaterialTheme.typography.titleMedium
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Card(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+
+                Column(
+                    modifier = Modifier.padding(16.dp)
+                ) {
+
+                    Text("Entry        —")
+                    Text("Stop Loss    —")
+                    Text("Target       —")
+                    Text("Quantity     —")
+                    Text("Risk         ₹1,000")
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
 
                 Button(
                     modifier = Modifier.weight(1f),
-                    onClick = {}
+                    onClick = {
+                        signal = "BUY"
+                    }
                 ) {
                     Text("BUY")
                 }
 
                 Button(
                     modifier = Modifier.weight(1f),
-                    onClick = {}
+                    onClick = {
+                        signal = "SELL"
+                    }
                 ) {
                     Text("SELL")
                 }
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            OutlinedButton(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = {
+                    signal = "WAIT"
+                }
+            ) {
+                Text("WAIT / RESET")
             }
 
             Spacer(modifier = Modifier.height(12.dp))
 
             Button(
                 modifier = Modifier.fillMaxWidth(),
-                onClick = {}
+                onClick = {
+                    mode = "PAPER TRADING"
+                }
             ) {
-                Text("BACKTEST")
+                Text("PAPER TRADE")
             }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = "₹1,00,000 Capital"
+            )
+
+            Text(
+                text = "Risk per trade: ₹1,000"
+            )
+
+            Text(
+                text = "Mode: $mode"
+            )
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            Button(
-                modifier = Modifier.fillMaxWidth(),
-                onClick = {}
-            ) {
-                Text("RISK CALCULATOR")
-            }
-
-            Spacer(modifier = Modifier.height(20.dp))
-
             Text(
-                text = "⚠ Paper Trading Mode • Real Orders OFF"
+                text = "Real Dhan Orders: OFF"
             )
         }
     }
